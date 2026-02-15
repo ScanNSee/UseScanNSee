@@ -1,0 +1,245 @@
+*{
+    box-sizing: border-box;
+}
+:root{
+    --bg-1: #f8fafc;
+    --bg-2: #fff7fb;
+    --accent: #ffd166;
+    --muted: rgba(10,10,10,0.6);
+}
+html,body{
+    height: 100%;
+}
+body{
+    font-family: "Poppins", sans-serif;
+    margin: 0;
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    /* Background image (cover) with a soft white overlay and gradient fallbacks */
+    background-image: linear-gradient(rgba(255,255,255,0.62), rgba(255,255,255,0.62)),
+                      url('posa1.png'),
+                      radial-gradient(1200px 600px at 10% 20%, #eef6ff 0%, transparent 20%),
+                      radial-gradient(900px 500px at 90% 80%, #fff2f8 0%, transparent 20%),
+                      linear-gradient(180deg, #ffffff 0%, #fbfbff 100%);
+    /* make the image fill the viewport while preserving aspect ratio */
+    background-size: auto, cover, auto, auto, auto;
+    background-position: center, center center, left top, right bottom, center;
+    background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, no-repeat;
+    background-attachment: scroll, fixed, scroll, scroll, scroll;
+    overflow: hidden;
+}
+
+.page{
+    position: relative;
+    width: 100%;
+    height: 100vh;
+}
+
+/* Soft decorative floating blobs */
+.page::before,
+.page::after{
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(36px);
+    opacity: 0.7;
+    transform: translateZ(0);
+}
+.page::before{
+    width: 520px;
+    height: 520px;
+    left: -12%;
+    top: 12%;
+    background: linear-gradient(135deg,#cfe9ff 0%, #e6fbff 100%);
+    animation: floatY 10s ease-in-out infinite;
+}
+.page::after{
+    width: 420px;
+    height: 420px;
+    right: -8%;
+    bottom: 8%;
+    background: linear-gradient(135deg,#fff0f6 0%, #fff7ea 100%);
+    animation: floatY 12s ease-in-out infinite reverse;
+}
+
+@keyframes floatY{
+    0%{ transform: translateY(0px); }
+    50%{ transform: translateY(-18px); }
+    100%{ transform: translateY(0px); }
+}
+
+/* Hero area */
+.hero{
+    height: 100vh;
+    display: grid;
+    place-items: center;
+}
+
+/* Prominent CTA */
+.cta{
+    background: linear-gradient(180deg,#ffffff 0%, #f6f9ff 100%);
+    border-radius: 14px;
+    border: 1px solid rgba(0,0,0,0.06);
+    /* larger hit area for easier clicking/tapping */
+    padding: 18px 56px;
+    min-height: 56px; /* recommended touch target >= 48-56px */
+    min-width: 160px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 44px;
+    line-height: 1;
+    box-shadow: 0 10px 30px rgba(18,38,63,0.08);
+    cursor: pointer;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.12s ease;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+.cta:hover{ transform: translateY(-4px); box-shadow: 0 18px 36px rgba(18,38,63,0.12); }
+.cta:active{ transform: translateY(-1px); opacity: 0.96; }
+
+/* Clear focus style for keyboard users */
+.cta:focus{
+    outline: none;
+}
+.cta:focus-visible{
+    box-shadow: 0 0 0 4px rgba(11,92,255,0.14), 0 16px 40px rgba(18,38,63,0.08);
+    transform: translateY(-4px);
+}
+
+/* Make entire visual area clickable on small screens */
+@media (max-width: 640px){
+  .cta{ font-size: 32px; padding: 14px 32px; min-height: 52px; }
+}
+
+/* Modal backdrop and content */
+.Message{
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(8,15,33,0.22), rgba(8,15,33,0.18));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.28s ease;
+    z-index: 50;
+}
+.Message.open{ opacity: 1; pointer-events: auto; backdrop-filter: blur(6px); }
+
+.innerMSG{
+    background: linear-gradient(180deg,#ffffff 0%, #fffafc 100%);
+    box-shadow: 0 18px 60px rgba(8,16,40,0.08);
+    padding: 48px 72px;
+    border-radius: 18px;
+    text-align: center;
+    width: 760px;
+    max-width: 92vw;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    transform: translateY(24px) scale(.995);
+    opacity: 0;
+    transition: transform 0.36s cubic-bezier(.2,.8,.2,1), opacity 0.36s ease;
+}
+.Message.open .innerMSG{ transform: translateY(0) scale(1); opacity: 1; }
+.innerMSG h1{ font-size: 36px; margin: 0; color: #071235; }
+.innerMSG p{ font-size: 22px; color: var(--muted); margin: 0 6px; line-height: 1.5; }
+
+.close{
+    margin-top: 8px;
+    align-self: center;
+    background: #0b5cff;
+    color: white;
+    border: none;
+    padding: 14px 32px;
+    border-radius: 999px;
+    font-size: 18px;
+    transition: background-color 0.16s ease, transform 0.12s ease, box-shadow 0.12s ease;
+    -webkit-tap-highlight-color: transparent;
+    min-height: 52px;
+    min-width: 140px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.close:hover,
+.close:active{
+    background: #e02424; 
+    cursor: pointer;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(224,36,36,0.12);
+}
+.close:focus-visible{
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(224,36,36,0.12);
+}
+
+
+.posa{ position: fixed; z-index: 60; pointer-events: none; }
+.posa-left{ left: 0; bottom: 0; width: clamp(120px, 25vw, 420px); transform: translate(-12%,6%); }
+.posa-right{ right: 0; bottom: 0; width: clamp(120px, 26vw, 420px); transform: translate(8%,6%); }
+
+/* Animated doggo: slides in, bounces, then fades out; repeats */
+.doggo{
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    width: clamp(140px, 22vw, 340px);
+    z-index: 72;
+    pointer-events: none;
+    opacity: 0;
+    transform-origin: center center;
+    /* center the image and animate with translateY offsets in keyframes */
+    transform: translate(-50%, -50%) scale(.98);
+    /* play once on load and keep final keyframe state */
+    animation: dogEntrance 5s ease-in-out 1 forwards;
+}
+
+@keyframes dogEntrance{
+    0%{ transform: translate(-50%, 60px) scale(.92); opacity: 0; }
+    10%{ transform: translate(-50%, 14px) scale(.98); opacity: 1; }
+    30%{ transform: translate(-50%, 0px) scale(1); opacity: 1; }
+    50%{ transform: translate(-50%, -8px) scale(1.04); opacity: 1; }
+    65%{ transform: translate(-50%, 0px) scale(1); opacity: 1; }
+    80%{ transform: translate(-50%, -60px) scale(.98); opacity: 0.45; }
+    100%{ transform: translate(-50%, -120px) scale(.95); opacity: 0; }
+}
+
+/* gentle slide/appear for images */
+.posa-left, .posa-right{ opacity: 0; animation: imgIn 1s cubic-bezier(.2,.8,.2,1) forwards; }
+.posa-left{ animation-delay: 0.12s; }
+.posa-right{ animation-delay: 0.18s; }
+@keyframes imgIn{ from{ opacity: 0; transform: translateY(14px) scale(.98); } to{ opacity: 1; transform: translateY(0) scale(1); } }
+
+@media (max-width: 640px){
+  .cta{ font-size: 34px; padding: 16px 36px; }
+  .innerMSG{ padding: 24px 20px; }
+}
+
+/* Tagline and badge */
+.hero-inner{ position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; }
+.tagline{ color: rgba(10,10,10,0.55); margin: 0; font-size: 16px; font-weight: 300; }
+.badge{
+        position: absolute;
+        right: 18px;
+        top: 18px;
+        background: linear-gradient(180deg,#ffffffcc,#f6f9ffcc);
+        border-radius: 999px;
+        padding: 8px 12px;
+        font-size: 13px;
+        color: #07306a;
+        box-shadow: 0 6px 18px rgba(8,16,40,0.06);
+        border: 1px solid rgba(7,48,106,0.06);
+}
+
+.site-footer{ position: absolute; left: 0; right: 0; bottom: 8px; text-align: center; z-index: 10; color: rgba(8,10,20,0.35); font-size: 12px; }
+
+/* Small polish: slightly darker CTA text and subtle letter-spacing */
+.cta{ color: #0b1726; letter-spacing: -0.6px; }
+
+@media (max-width: 480px){
+    .badge{ right: 10px; top: 10px; padding: 6px 10px; font-size: 12px; }
+    .tagline{ font-size: 14px; }
+}

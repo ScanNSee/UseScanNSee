@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="1.css">
+    <meta name="robots" content="noindex, nofollow">
+    <title>ScanNSee</title>
+</head>
+<body>
+    <div class="page">
+        <header class="hero">
+            <div class="hero-inner">
+                <button id="click-me" class="cta">Click Me</button>
+                <p class="tagline">Scan the Code. Click The Button. Surprise Your Soul.</p>
+            </div>
+        </header>
+
+        <div class="Message" id="message" aria-hidden="true">
+            <div class="innerMSG">
+                <h1>A Gentle Reminder!</h1>
+                <p>Something better will come!</p>
+                <button id="close-button" class="close">Close</button>
+            </div>
+        </div>
+
+        <!-- Decorative images (kept from original) -->
+        
+        <img src="posanamaybolaklak.png" alt="cat left" class="posa posa-left">
+        <img src="doggoo2.png" alt="cat right" class="posa posa-right">
+        <!-- animated doggo -->
+        <img src="doggo.png" alt="doggo" class="doggo" aria-hidden="true">
+        
+        <footer class="site-footer" aria-hidden="true">
+            <small>Made with ❤️ — ScanNSee</small>
+        </footer>
+    </div>
+
+    <script>
+        const openBtn = document.getElementById('click-me');
+        const closeBtn = document.getElementById('close-button');
+        const message = document.getElementById('message');
+
+        openBtn.addEventListener('click', () => {
+        message.classList.add('open');
+    });    
+
+        closeBtn.addEventListener('click', () => {
+        message.classList.remove('open');
+    });
+    </script>
+</body>
+</html>
